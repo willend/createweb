@@ -423,7 +423,7 @@ if (-f "$con/sitename") {
   }
 }
 print "Adding menu.html for site $HOME\n";
-print MENU '<P style="font-family:Verdana"><B><A href="/" class="menu">$HOME</A></B><BR>', 
+print MENU '<P style="font-family:Verdana"><B><A href="/" class="menu">',$HOME,'</A></B><BR>', 
     " \n\t", '<SMALL>', "\n";
 close MENU;
 
