@@ -126,7 +126,7 @@ sub makeweb {
 #
 # Make "web"
 #
-
+    print "Creating web folder $web\n";
     mkdir($web, 0777) or die("Unable to mkdir $web: $!\n");
 }
 
@@ -134,7 +134,7 @@ sub scontoweb {
 #
 # Copy structure from "scon" to "web" via links
 #
-
+    print "Adding $scon to folder $web\n";
     chdir($scon) or die("Unable to enter dir $scon: $!\n");
     opendir(SCON, ".") or die("Unable to open $scon: $!\n");
     my @names = readdir(SCON) or die("Unable to read $scon: $!\n");
@@ -156,7 +156,7 @@ sub layouttoweb {
 #
 # Copy structure from "layout" to "web" via links
 #
-    
+    print "Adding $layout to folder $web\n";
     chdir($layout) or die("Unable to enter dir $layout: $!\n");
     opendir(LAYOUT, ".") or die("Unable to open $layout: $!\n");
     my @names = readdir(LAYOUT) or die("Unable to read $layout: $!\n");
@@ -185,6 +185,7 @@ sub contoweb {
 	
 	my ($startdir) = cwd();
 	
+	print "\t\tScon working on $workdir\n";
 	chdir($workdir) or die("Unable to enter dir $workdir: $!\n");
 	opendir(DIR, ".") or die("Unable to open $workdir: $!\n");
 	my @names = readdir(DIR) or die("Unable to read $workdir: $!\n");
@@ -249,6 +250,7 @@ EOF
     }
 
 &scancon($con);
+print "Adding final /index.html via ln -s \n";
 system("cd $web && ln -s $VERBOSE main.html index.html");
 }
 
@@ -374,6 +376,7 @@ sub makesubmenu {
 	 } else {
 	     $myname=$name;
 	 }
+	
 
 	$url=$fullname;
 	
@@ -409,6 +412,7 @@ closedir(WEB);
 chdir($cwd) or die("Unable to chage to dir $cwd: $!\n");
 
 open MENU, ">>$web/menu.html";
+print "Adding menu.html\n";
 print MENU '<P style="font-family:Verdana"><B><A href="/" class="menu">McStas</A></B><BR>', 
     " \n\t", '<SMALL>', "\n";
 close MENU;
@@ -435,6 +439,7 @@ foreach my $name (sort priority @names) {
 	if (open (S,"<$con/$name/siteonly")) {
 	    while (<S>) {
 		$site = $_;
+		print "\tAdding siteonly item to menu.html\n";
 		print MENU $site;
 	    }
 	    close S;
@@ -462,7 +467,7 @@ foreach my $name (sort priority @names) {
 	chomp($url);
       }
     }
-    
+    print "\tAdding entry $name to menu.html\n";
     print MENU '<P style="font-family:Verdana"><B><A href="/', $url,
 	'/" class="menu">', ucfirst $myname, '</A></B><BR>'," \n\t", '<SMALL>', "\n";
     close MENU;
