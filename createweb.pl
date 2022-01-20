@@ -531,7 +531,7 @@ sub makelists {
 			}
 		    }
 		    close TITLE;
-		    $url=$fullname;
+		    $url="/$fullname";
 		    if (-f "$web/$fullname/external") {
 		      if (open (S,"<$web/$fullname/external")) {
 			while (<S>) {
@@ -544,10 +544,10 @@ sub makelists {
 		    
 		    # this works, but problems if there are tags inside the h2 tag
 		    if ($contents =~ m|.*?\<h\d\>(.*?)\</h\d\>|si ) {
-			print LIST "<li><a href=\"/$url/\">$1</a> </li>", "\n";
+			print LIST "<li><a href=\"$url/\">$1</a> </li>", "\n";
 		    }
 		    else {
-			print LIST "<li><a href=\"/$url\">", ucfirst $name, "</a> </li>", "\n";
+			print LIST "<li><a href=\"$url\">", ucfirst $name, "</a> </li>", "\n";
 		    }
 		    close LIST;
 		}
