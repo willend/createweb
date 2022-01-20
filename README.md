@@ -34,7 +34,9 @@ Inputs, a set of folders:
 
 Example 
 ```
-createweb.pl -c ../contents/ -s ../specialcontents/ -l ../layout/ -w /srv/web/mysite.org/wwwnew\
- -p ""
+createweb.pl -c inputs/contents/ -s inputs/specialcontents/ -l inputs/layout/ -p "" -w output_folder
 ```
+
+The folder structure under inputs has been used to generate the site
+shown under folder output
 
