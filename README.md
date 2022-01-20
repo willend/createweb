@@ -38,5 +38,7 @@ createweb.pl -c inputs/contents/ -s inputs/specialcontents/ -l inputs/layout/ -p
 ```
 
 The folder structure under inputs has been used to generate the site
-shown under folder output
+shown under folder output.
+
+The example is also visible at http://createweb.willendrup.org
 
