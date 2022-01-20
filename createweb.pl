@@ -412,8 +412,18 @@ closedir(WEB);
 chdir($cwd) or die("Unable to chage to dir $cwd: $!\n");
 
 open MENU, ">>$web/menu.html";
-print "Adding menu.html\n";
-print MENU '<P style="font-family:Verdana"><B><A href="/" class="menu">McStas</A></B><BR>', 
+$HOME="Home";
+if (-f "$con/sitename") {
+  if (open (S,"<$con/sitename")) {
+    while (<S>) {
+      $HOME=$_;
+    }
+    close S;
+    chomp($HOME);
+  }
+}
+print "Adding menu.html for site $HOME\n";
+print MENU '<P style="font-family:Verdana"><B><A href="/" class="menu">$HOME</A></B><BR>', 
     " \n\t", '<SMALL>', "\n";
 close MENU;
 
