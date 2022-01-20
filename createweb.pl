@@ -457,7 +457,7 @@ foreach my $name (sort priority @names) {
 	$myname=$name;
     }
 
-    $url=$name;
+    $url="/$name";
     if (-f "$con/$name/external") {
       if (open (S,"<$con/$name/external")) {
 	while (<S>) {
@@ -468,7 +468,7 @@ foreach my $name (sort priority @names) {
       }
     }
     print "\tAdding entry $name to menu.html\n";
-    print MENU '<P style="font-family:Verdana"><B><A href="/', $url,
+    print MENU '<P style="font-family:Verdana"><B><A href="', $url,
 	'/" class="menu">', ucfirst $myname, '</A></B><BR>'," \n\t", '<SMALL>', "\n";
     close MENU;
 
