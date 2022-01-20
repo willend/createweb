@@ -374,10 +374,10 @@ sub makesubmenu {
 	 } else {
 	     $myname=$name;
 	 }
+
+	$url="empty";
 	
 	if (-f "$workdir/$name/external") {
-	  $url=$fullname;
-	} else {
 	  if (open (S,"<$workdir/$name/external")) {
 	    while (<S>) {
 		$url=$_;
@@ -385,6 +385,8 @@ sub makesubmenu {
 	    close S;
 	    chomp($url);
 	   }
+	} else {
+	  $url=$fullname;
 	}
 	print MENU "\t\t", '&nbsp;<A href="', $url, '" class="menu">', ucfirst $myname, '</A><BR>', "\n";
 	
@@ -451,9 +453,8 @@ foreach my $name (sort priority @names) {
 	$myname=$name;
     }
 
+    $url="empty";
     if (-f "$con/$name/external") {
-      $url=$name;
-    } else {
       if (open (S,"<$con/$name/external")) {
 	while (<S>) {
 	  $url=$_;
@@ -461,6 +462,8 @@ foreach my $name (sort priority @names) {
 	close S;
 	chomp($url);
       }
+    } else {
+      $url=$name;
     }
     
     print MENU '<P style="font-family:Verdana"><B><A href="/', $url,
@@ -526,10 +529,8 @@ sub makelists {
 			}
 		    }
 		    close TITLE;
-
+		    $url="empty";
 		    if (-f "$web/$fullname/external") {
-		      $url=$fullname;
-		    } else {
 		      if (open (S,"<$web/$fullname/external")) {
 			while (<S>) {
 			  $url=$_;
@@ -537,9 +538,10 @@ sub makelists {
 			close S;
 			chomp($url);
 		      }
+		    } else {
+		      $url=$fullname;
 		    }
 
-		    
 		    # this works, but problems if there are tags inside the h2 tag
 		    if ($contents =~ m|.*?\<h\d\>(.*?)\</h\d\>|si ) {
 			print LIST "<li><a href=\"/$url/\">$1</a> </li>", "\n";
