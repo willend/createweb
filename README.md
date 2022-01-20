@@ -7,7 +7,7 @@ Historically it was developed by Per Marker Mortensen for use at the
 Neurobiology Research Unit website nru.dk.
 
 It has since been adapted for McStas (mcstas.org) and McXtrace
-(mcxtrace.org) and other websites by @willend
+(mcxtrace.org) and other websites by Peter Willendrup.
 
 License: GPL3
 
