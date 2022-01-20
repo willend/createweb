@@ -254,8 +254,8 @@ system("cd $web && ln -s $VERBOSE main.html index.html");
 
 sub makemenu {
 #
-#  Scan "web" for dirs, make menu structure, takeing "hide" 
-#  and "priority" into account.
+#  Scan "web" for dirs, make menu structure, takeing "hide",
+#  "external" and "priority" into account.
 #
 
 # make priority sort, bigger priorities are listed in the top
@@ -375,8 +375,19 @@ sub makesubmenu {
 	     $myname=$name;
 	 }
 	
-
-	print MENU "\t\t", '&nbsp;<A href="', $fullname, '" class="menu">', ucfirst $myname, '</A><BR>', "\n";
+	if (-f "$workdir/$name/external") {
+	  $url=$fullname;
+	} else {
+	  if (open (S,"<$workdir/$name/external")) {
+	    while (<S>) {
+		$url=$_;
+	     }
+	    close S;
+	    chomp($url);
+	   }
+	}
+	print MENU "\t\t", '&nbsp;<A href="', $url, '" class="menu">', ucfirst $myname, '</A><BR>', "\n";
+	
 	
 	if (-f "$workdir/$name/siteonly") {
 	    print MENU '<!--#endif -->', "\n";
@@ -440,8 +451,19 @@ foreach my $name (sort priority @names) {
 	$myname=$name;
     }
 
-
-    print MENU '<P style="font-family:Verdana"><B><A href="/', $name,
+    if (-f "$con/$name/external") {
+      $url=$name;
+    } else {
+      if (open (S,"<$con/$name/external")) {
+	while (<S>) {
+	  $url=$_;
+	}
+	close S;
+	chomp($url);
+      }
+    }
+    
+    print MENU '<P style="font-family:Verdana"><B><A href="/', $url,
 	'/" class="menu">', ucfirst $myname, '</A></B><BR>'," \n\t", '<SMALL>', "\n";
     close MENU;
 
@@ -504,12 +526,26 @@ sub makelists {
 			}
 		    }
 		    close TITLE;
+
+		    if (-f "$web/$fullname/external") {
+		      $url=$fullname;
+		    } else {
+		      if (open (S,"<$web/$fullname/external")) {
+			while (<S>) {
+			  $url=$_;
+			}
+			close S;
+			chomp($url);
+		      }
+		    }
+
+		    
 		    # this works, but problems if there are tags inside the h2 tag
-		    if ($contents =~ m|.*?\<h\d\>(.*?)\</h\d\>|si ) { 
-			print LIST "<li><a href=\"/$fullname/\">$1</a> </li>", "\n";
+		    if ($contents =~ m|.*?\<h\d\>(.*?)\</h\d\>|si ) {
+			print LIST "<li><a href=\"/$url/\">$1</a> </li>", "\n";
 		    }
 		    else {
-			print LIST "<li><a href=\"/$fullname\">", ucfirst $name, "</a> </li>", "\n";
+			print LIST "<li><a href=\"/$url\">", ucfirst $name, "</a> </li>", "\n";
 		    }
 		    close LIST;
 		}
